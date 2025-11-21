@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { SOUNDS } from './constants';
 import { SoundCard } from './components/SoundCard';
 import { CustomBuilder } from './components/CustomBuilder';
