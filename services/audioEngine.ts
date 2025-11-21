@@ -143,8 +143,6 @@ class AudioEngine {
       } 
       // --- Binaural ---
       else if (sound.type === 'binaural' && sound.baseFreq && sound.beatFreq !== undefined) {
-        const merger = ctx.createChannelMerger(2);
-        
         // Left Ear
         const oscL = ctx.createOscillator();
         oscL.type = sound.waveType || WaveType.SINE;
