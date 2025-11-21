@@ -2,6 +2,13 @@
 
 A scientific and pseudo-scientific soundscape generator built with React, Web Audio API, and Tailwind CSS.
 
+## 🎵 Live Demo
+
+Try it out: [**https://brunwo.github.io/resonate/**](https://brunwo.github.io/resonate/)
+
+### Screenshot
+![Resonate App Screenshot](Screenshot.png)
+
 ## 🚀 Running Locally
 
 1.  **Install Dependencies**:
