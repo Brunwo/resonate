@@ -16,6 +16,11 @@ export default function App() {
   const [timerDuration, setTimerDuration] = useState<number | null>(null); // Total minutes
   const [timeLeft, setTimeLeft] = useState<number | null>(null); // Seconds remaining
 
+  // Sync showLab with filter
+  useEffect(() => {
+    setShowLab(filter === 'Lab');
+  }, [filter]);
+
   // Timer Logic
   useEffect(() => {
     if (timeLeft === null) return;
@@ -133,8 +138,10 @@ export default function App() {
   const activeCount = Object.values(activeSounds).filter((s: ActiveSoundState) => s.isPlaying).length;
 
   // Filter logic
-  const filteredSounds = filter === 'All' 
-    ? SOUNDS 
+  const filteredSounds = filter === 'All'
+    ? SOUNDS
+    : filter === 'Lab'
+    ? [] // Don't show sounds when lab is active
     : SOUNDS.filter(s => s.category === filter);
 
   return (
@@ -148,26 +155,13 @@ export default function App() {
         <p className="text-zinc-400 max-w-2xl mx-auto text-lg font-light leading-relaxed">
           A scientifically-grounded sonic playground. Curate your environment using psychoacoustic frequencies, binaural entrainment, and colored noise.
         </p>
-        
-        <button 
-          onClick={() => setShowLab(!showLab)}
-          className={`absolute top-10 right-6 md:right-10 text-xs font-bold uppercase tracking-widest border rounded-full px-4 py-2 transition-all ${showLab ? 'bg-zinc-100 text-zinc-900 border-zinc-100' : 'text-zinc-500 border-zinc-800 hover:border-zinc-500'}`}
-        >
-          {showLab ? 'Close Lab' : 'Open Lab'}
-        </button>
       </header>
 
-      {/* Custom Builder Section */}
-      {showLab && (
-        <CustomBuilder 
-          isPlaying={activeSounds['custom-builder']?.isPlaying || false}
-          onToggle={(data) => toggleSound('custom-builder', data)}
-        />
-      )}
 
       {/* Filter Tabs */}
       <div className="sticky top-0 z-20 bg-zinc-950/80 backdrop-blur-md w-full flex justify-center border-b border-zinc-800 mb-10">
         <div className="flex gap-2 p-4 overflow-x-auto max-w-full no-scrollbar">
+           {/* Regular category tabs */}
            {['All', ...Object.values(SoundCategory).filter(c => c !== 'Custom')].map((cat) => (
              <button
                key={cat}
@@ -177,8 +171,24 @@ export default function App() {
                {cat}
              </button>
            ))}
+           {/* Lab tab with distinctive styling */}
+           <button
+             onClick={() => setFilter('Lab')}
+             className={`px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap border-2 ${filter === 'Lab' ? 'bg-amber-500 text-amber-900 border-amber-500' : 'text-amber-400 border-amber-700 hover:border-amber-500 hover:text-amber-300'}`}
+           >
+             Lab
+           </button>
         </div>
       </div>
+
+
+      {/* Custom Builder Section */}
+      {showLab && (
+        <CustomBuilder 
+          isPlaying={activeSounds['custom-builder']?.isPlaying || false}
+          onToggle={(data) => toggleSound('custom-builder', data)}
+        />
+      )} 
 
       {/* Grid */}
       <main className="w-full max-w-7xl px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

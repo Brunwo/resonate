@@ -2,7 +2,6 @@ export enum SoundCategory {
   SOLFEGGIO = 'Solfeggio',
   BINAURAL = 'Binaural',
   NOISE = 'Noise',
-  NATURE = 'Nature',
   SLEEP = 'Sleep',
   CUSTOM = 'Custom'
 }
