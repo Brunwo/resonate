@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# Allow all web crawlers to access the site
+# This is a single-page application that serves dynamic content
+# No specific paths to disallow
